@@ -1,0 +1,33 @@
+{
+  "extends": "tsconfig/vite.json",
+  "include": ["src", "node_modules/ahooks"],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declarationMap": false,
+    "allowSyntheticDefaultImports": true,
+    "declarationDir": "dist",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "declaration": true
+  }
+}
