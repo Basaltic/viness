@@ -1,5 +1,5 @@
 {
-    "name": "react-turbo-vite-shadcn-monorepo-template",
+    "name": "viness",
     "private": false,
     "scripts": {
         "build": "turbo run build",
