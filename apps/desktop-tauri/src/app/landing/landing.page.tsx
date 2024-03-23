@@ -1,15 +1,20 @@
-import { useNavigate } from '@tanstack/react-router';
+// import { useNavigate } from '@tanstack/react-router';
 
-import { Button } from 'ui/components/button';
+import { Button } from '@/common/components/ui/button';
 
+// import { appStore } from '../app-state/app-state';
+
+/**
+ * Check if the app is first used
+ * 1.
+ */
 export function LandingPage() {
-    const navigate = useNavigate();
-
-    const handleGetStart = () => navigate({ to: '/app' });
+    // const navigate = useNavigate();
+    // const isFirstUse = appStore.use.storagePath();
 
     return (
         <div>
-            <Button onClick={handleGetStart}>Get Start</Button>
+            <Button>Get Start</Button>
         </div>
     );
 }
