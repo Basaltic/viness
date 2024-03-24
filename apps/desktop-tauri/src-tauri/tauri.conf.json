@@ -6,19 +6,15 @@
         "distDir": "../dist"
     },
     "package": {
-        "productName": "viness",
+        "productName": "test_template",
         "version": "0.0.0"
     },
     "tauri": {
         "allowlist": {
-            "all": true,
+            "all": false,
             "shell": {
                 "all": false,
                 "open": true
-            },
-            "protocol": {
-                "asset": true,
-                "assetScope": ["**"]
             }
         },
         "windows": [
@@ -29,7 +25,7 @@
             }
         ],
         "security": {
-            "csp": "default-src 'self'; img-src 'self' asset: https://asset.localhost"
+            "csp": null
         },
         "bundle": {
             "active": true,

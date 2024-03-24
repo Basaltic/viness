@@ -4,9 +4,10 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -18,16 +19,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noEmitOnError": true,
-    "skipLibCheck": true,
-
     "paths": {
       "@/*": ["./src/*"],
-      "@styled/*": ["./styled-system/*"],
-      "styled-system": ["./styled-system/*"]
+      
     },
-    "baseUrl": ".",
   },
-  "include": ["src", "styled-system", "node_modules/ui"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

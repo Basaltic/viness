@@ -9,8 +9,6 @@
     },
     "files": [
         "dist",
-        "components",
-        "lib",
         "styles",
         "tailwindcss.config.ts"
     ],
