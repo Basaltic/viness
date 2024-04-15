@@ -21,6 +21,7 @@ export default defineConfig(async () => ({
     resolve: {
         alias: {
             '@': '/src',
+            'styled-system': '/styled-system',
         },
     },
     build: {
