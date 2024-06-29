@@ -1,11 +1,12 @@
 {
-  "extends": "tsconfig/react-library.json",
-  "include": ["."],
+  "extends": "@viness/tsconfig/react-library.json",
+  "include": ["src", "src/components", "src/lib", "tsup.config.ts"],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@ui/*": ["./*"],
+      "@ui/*": ["./src/*"],
     },
+    "types": ["node"],
   }
 }

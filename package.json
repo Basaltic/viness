@@ -9,17 +9,25 @@
         "clean": "turbo run clean && rm -rf node_modules",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "changeset": "changeset",
-        "version": "changeset version"
+        "version": "changeset version",
+        "release": "turbo run build && changeset publish --registry=https://registry.npmjs.org/",
+        "docs:dev": "turbo run docs:dev",
+        "docs:build": "turbo run docs:build",
+        "docs:preview": "turbo run docs:preview"
     },
     "devDependencies": {
+        "@viness/eslint-config": "workspace:*",
         "@changesets/cli": "^2.26.1",
-        "eslint-config": "workspace:*",
         "eslint": "^8.49.0",
         "prettier": "^3.0.3",
-        "turbo": "^1.10.7"
+        "turbo": "2.0.4"
     },
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org/"
+    },
+    "packageManager": "pnpm@8.15.4",
+    "resolutions": {
+        "@types/react": "^18.2.7"
     }
 }

@@ -1,7 +1,3 @@
-
-
-
-
 # dependencies
 node_modules
 .turbo
@@ -35,3 +31,5 @@ yarn-error.log*
 .cache
 stats.html
 pnpm-lock.yaml
+
+# others

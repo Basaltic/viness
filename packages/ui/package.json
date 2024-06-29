@@ -1,17 +1,23 @@
 {
-    "name": "ui",
+    "name": "@viness/ui",
     "version": "0.0.1",
     "exports": {
-        "./lib/*": "./lib/*",
-        "./components/*": "./components/*",
-        "./globals.css": "./styles/globals.css",
+        "./lib/*": {
+            "types": "./dist/src/lib/*.d.ts",
+            "import": "./dist/src/lib/*.mjs",
+            "require": "./dist/src/lib/*.js"
+        },
+        "./components/*": {
+            "types": "./dist/src/components/*.d.ts",
+            "import": "./dist/src/components/*.mjs",
+            "require": "./dist/src/components/*.js"
+        },
+        "./globals.css": "./src/styles/globals.css",
         "./tailwind.config": "./tailwind.config.ts"
     },
     "files": [
         "dist",
-        "components",
-        "lib",
-        "styles",
+        "src",
         "tailwindcss.config.ts"
     ],
     "scripts": {
@@ -25,15 +31,15 @@
         "@types/node": "20.10.7",
         "@types/react": "^18.2.5",
         "autoprefixer": "^10.4.13",
-        "eslint-config": "workspace:*",
         "postcss": "^8.4.20",
         "react": "^18.2.0",
         "shadcn-ui": "0.8.0",
-        "tailwind-config": "workspace:*",
         "tailwindcss": "^3.2.4",
-        "tsconfig": "workspace:*",
-        "tsup": "8.0.1",
-        "typescript": "^5.1.6"
+        "tsup": "8.1.0",
+        "typescript": "5.1.6",
+        "@viness/tailwind-config": "workspace:*",
+        "@viness/eslint-config": "workspace:*",
+        "@viness/tsconfig": "workspace:*"
     },
     "dependencies": {
         "@hookform/resolvers": "^3.3.4",
@@ -68,7 +74,6 @@
         "class-variance-authority": "^0.7.0",
         "clsx": "2.1.0",
         "cmdk": "^0.2.0",
-        "date-fns": "3.0.6",
         "embla-carousel-react": "8.0.0-rc17",
         "next-themes": "^0.2.1",
         "react-day-picker": "^8.10.0",
