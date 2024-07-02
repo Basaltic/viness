@@ -1,5 +1,4 @@
 import './main.css';
-import '@viness/ui/globals.css';
 
 import 'overlayscrollbars/overlayscrollbars.css';
 

@@ -1,15 +1,14 @@
-import { CREATIVE_LIBRARY_CONSTS } from '../common/constants';
-import { JSONDB } from '../common/database';
+// import { CREATIVE_LIBRARY_CONSTS } from '../common/constants';
 
 /**
  * save，load，manupulate meta info
  */
 export class CreativeLibraryMetaRepo {
-    private fullPath: string;
+    // private fullPath: string;
 
-    constructor(folderPath: string) {
-        this.fullPath = `${folderPath}/${CREATIVE_LIBRARY_CONSTS.MetaFileName}`;
-    }
+    // constructor(folderPath: string) {
+    //     this.fullPath = `${folderPath}/${CREATIVE_LIBRARY_CONSTS.MetaFileName}`;
+    // }
 
     save() {}
 }

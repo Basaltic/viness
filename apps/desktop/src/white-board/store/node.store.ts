@@ -25,10 +25,8 @@ function createNodeStorePersist(id: string) {
                 },
             };
         },
-        setItem: (name, value) => {
-            value.state;
-        },
-        removeItem: (key) => {},
+        setItem: () => {},
+        removeItem: () => {},
     };
 
     return {

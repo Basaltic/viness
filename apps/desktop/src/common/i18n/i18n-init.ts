@@ -1,21 +1,33 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import i18nextHttpBackend from 'i18next-http-backend';
 import i18nLanguageDetector from 'i18next-browser-languagedetector';
+import en from './locales/en/translation.json';
+import zh from './locales/zh/translation.json';
 
-i18n.use(i18nextHttpBackend)
-    .use(i18nLanguageDetector)
+export const DEFAULT_LNG = 'zh';
+// this is exported in order to avoid hard coding supported languages in more than 1 place
+const resources = {
+    zh: {
+        translations: zh,
+    },
+    en: {
+        translations: en,
+    },
+};
+
+i18n.use(i18nLanguageDetector)
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
-        fallbackLng: 'zh',
+        resources,
+
+        fallbackLng: DEFAULT_LNG,
+
+        debug: false,
 
         interpolation: {
             escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
         },
-        // 'i18next-http-backend' options, see => https://github.com/i18next/i18next-http-backend?tab=readme-ov-file#backend-options
-        backend: {
-            loadPath: '/locales/{{lng}}/{{ns}}.json',
-        },
+
         // 'i18next-browser-languagedetector' options, see => https://github.com/i18next/i18next-browser-languageDetector?tab=readme-ov-file#detector-options
         detection: {},
     });

@@ -12,7 +12,6 @@
             "import": "./dist/src/components/*.mjs",
             "require": "./dist/src/components/*.js"
         },
-        "./globals.css": "./src/styles/globals.css",
         "./tailwind.config": "./tailwind.config.ts"
     },
     "files": [
