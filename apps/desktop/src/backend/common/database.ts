@@ -14,6 +14,7 @@ export class TauriFileAdapter<T> implements Adapter<T> {
         return null;
     }
     async write(data: T): Promise<void> {
+        // window.requestIdleCallback()
         const rawData = JSON.stringify(data);
         return writeTextFile(this.path, rawData);
     }

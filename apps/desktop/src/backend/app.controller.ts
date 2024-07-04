@@ -9,5 +9,8 @@ export class AppController {
 
     getUsageHistory() {}
 
-    changeLibrary() {}
+    /**
+     *
+     */
+    selectLibrary() {}
 }
