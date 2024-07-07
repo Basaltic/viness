@@ -2,11 +2,13 @@ import { createStore, PersistStorage } from '@viness/store';
 
 type NodeState = {
     id: string;
+    type: string;
     data: any;
 };
 
 const defaultNodeState = {
     id: '',
+    type: '',
     data: void 0,
 };
 
@@ -21,6 +23,7 @@ function createNodeStorePersist(id: string) {
             return {
                 state: {
                     id: 'test',
+                    type: '',
                     data: {},
                 },
             };
