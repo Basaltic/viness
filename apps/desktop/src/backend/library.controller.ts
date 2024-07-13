@@ -1,4 +1,4 @@
-import { CreativeLibraryInfo } from './domain/creative-library';
+import { CreativeLibrary, CreativeLibraryInfo } from './domain/library';
 
 /**
  *
@@ -7,7 +7,7 @@ export class CreativeLibraryController {
     /**
      * get all the creative libraries
      */
-    async getCreativeLibraryList(): Promise<CreativeLibraryInfo[]> {
+    async list(): Promise<CreativeLibraryInfo[]> {
         // get
 
         return [];
@@ -16,8 +16,19 @@ export class CreativeLibraryController {
     /**
      * get the latest recent used library
      */
-    async getRecentUsedLibrary(): Promise<CreativeLibraryInfo | null> {
+    async getRecentUsed(): Promise<CreativeLibraryInfo | null> {
         return null;
+    }
+
+    /**
+     *
+     */
+    async open(path: string) {
+        // validate
+        // set to history
+        // set to current state
+
+        const currentLibrary = new CreativeLibrary(path);
     }
 
     /**
@@ -31,11 +42,4 @@ export class CreativeLibraryController {
      * delete the createive library
      */
     delete() {}
-
-    /**
-     *
-     */
-    updateState() {}
-
-    getNodes() {}
 }

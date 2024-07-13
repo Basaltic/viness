@@ -1,3 +1,5 @@
+import { JSONDB } from '../common/database';
+
 /**
  *
  */
@@ -10,6 +12,18 @@ export type CreativeLibrarySettings = {};
 
 export type CreativeLibraryState = {};
 
+export type LibraryNodeEntity = {
+    id: string;
+};
+
+class LibraryNodes {
+    private repo: JSONDB<{ data: LibraryNodeEntity[] }>;
+
+    constructor(path: string) {
+        this.repo = new JSONDB<{ data: LibraryNodeEntity[] }>(path, { data: [] });
+    }
+}
+
 export class CreativeLibrary {
     private metaFileName = 'meta.json';
     private nodesFileName = 'nodes.json';
@@ -18,7 +32,11 @@ export class CreativeLibrary {
 
     private locationPath = '';
 
+    private nodes: LibraryNodes;
+
     constructor(locationPath: string) {
         this.locationPath = locationPath;
+
+        this.nodes = new LibraryNodes(``);
     }
 }
