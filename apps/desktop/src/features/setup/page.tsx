@@ -10,8 +10,7 @@ createUseCase(() => {});
 export function FirstUseSetupPage() {
     return (
         <div>
-            <Input placeholder="Your First Libaray" />
-            <Button>Select</Button>
+            <Input placeholder="Library Name" />
         </div>
     );
 }

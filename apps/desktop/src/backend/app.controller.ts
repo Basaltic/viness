@@ -1,13 +1,11 @@
 import * as dialog from '@tauri-apps/plugin-dialog';
+import { AppSetting } from './domain/app-setting';
 
 /**
  *
  */
 export class AppController {
-    /**
-     *
-     */
-    getAppInfo() {}
+    private setting = new AppSetting();
 
     /**
      *

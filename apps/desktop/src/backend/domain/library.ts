@@ -1,3 +1,4 @@
+import { mkdir } from '@tauri-apps/plugin-fs';
 import { JSONDB } from '../common/database';
 
 /**
@@ -25,18 +26,25 @@ class LibraryNodes {
 }
 
 export class CreativeLibrary {
-    private metaFileName = 'meta.json';
     private nodesFileName = 'nodes.json';
     private settingFileName = 'setting.json';
     private rawFileStorageFolder = 'assets';
 
-    private locationPath = '';
+    private basePath = '';
 
     private nodes: LibraryNodes;
 
-    constructor(locationPath: string) {
-        this.locationPath = locationPath;
+    constructor(basePath: string) {
+        this.basePath = basePath;
 
         this.nodes = new LibraryNodes(``);
+    }
+
+    async initialize() {
+        //
+        const assetFolderPath = `${this.basePath}/${this.rawFileStorageFolder}`;
+        await mkdir(assetFolderPath, {});
+
+        //
     }
 }

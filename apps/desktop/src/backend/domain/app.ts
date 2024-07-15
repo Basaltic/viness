@@ -1,9 +1,4 @@
 /**
- * Settings of the application
- */
-export type AppSetting = {};
-
-/**
  * Meta Info of the application
  */
 export type AppInfo = {
