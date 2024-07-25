@@ -1,11 +1,6 @@
 import { controllers } from '@/backend';
-import { createUseCase } from '@viness/flow';
-import { Button } from '@viness/ui/components/button';
-
-const selectFolderCase = createUseCase(async () => {
-    const folder = await controllers.app.selectLibraryFolder();
-    console.log(folder);
-});
+import { useNavigate } from '@tanstack/react-router';
+import { useMount } from 'ahooks';
 
 /**
  * The Entry Page of the Application
@@ -13,14 +8,17 @@ const selectFolderCase = createUseCase(async () => {
  * 2. redirect to other feature pages
  */
 export function LandingPage() {
-    const handle = async () => {
-        const folder = await controllers.app.selectLibraryFolder();
-        console.log(folder);
-    };
+    const navigate = useNavigate();
 
-    return (
-        <div>
-            <Button onClick={handle}>Test</Button>
-        </div>
-    );
+    useMount(async () => {
+        const lastPath = await controllers.app.openHistory.getFirst();
+        if (lastPath) {
+            const result = await controllers.app.open(lastPath);
+            navigate({ to: `/board/${result?.data?.id}` });
+        } else {
+            navigate({ to: '/first-use-setup' });
+        }
+    });
+
+    return <div></div>;
 }

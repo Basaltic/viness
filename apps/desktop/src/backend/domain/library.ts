@@ -1,5 +1,6 @@
-import { mkdir } from '@tauri-apps/plugin-fs';
-import { JSONDB } from '../common/database';
+import { LibraryInfo } from './library-setting';
+import { LibraryNodes } from './library-nodes';
+import { LibraryAssets } from './library-assets';
 
 /**
  *
@@ -17,34 +18,35 @@ export type LibraryNodeEntity = {
     id: string;
 };
 
-class LibraryNodes {
-    private repo: JSONDB<{ data: LibraryNodeEntity[] }>;
-
-    constructor(path: string) {
-        this.repo = new JSONDB<{ data: LibraryNodeEntity[] }>(path, { data: [] });
-    }
-}
-
 export class CreativeLibrary {
-    private nodesFileName = 'nodes.json';
-    private settingFileName = 'setting.json';
-    private rawFileStorageFolder = 'assets';
+    public basePath = '';
 
-    private basePath = '';
+    public info: LibraryInfo;
+    public nodes: LibraryNodes;
+    public assets: LibraryAssets;
 
-    private nodes: LibraryNodes;
-
-    constructor(basePath: string) {
+    constructor(params: { basePath: string; nodes: LibraryNodes; assets: LibraryAssets; info: LibraryInfo }) {
+        const { basePath, nodes, assets, info } = params;
+        this.info = info;
+        this.nodes = nodes;
+        this.assets = assets;
         this.basePath = basePath;
-
-        this.nodes = new LibraryNodes(``);
     }
 
-    async initialize() {
-        //
-        const assetFolderPath = `${this.basePath}/${this.rawFileStorageFolder}`;
-        await mkdir(assetFolderPath, {});
+    static async initialize(basePath: string) {
+        const info = await LibraryInfo.initialize(basePath);
+        const nodes = await LibraryNodes.initialize(basePath);
+        const assets = await LibraryAssets.initialize(basePath);
 
-        //
+        return new CreativeLibrary({ basePath, nodes, assets, info });
+    }
+
+    /**
+     * Check if the folder is a valid library
+     *
+     * @param path
+     */
+    static async validate(path: string) {
+        return true;
     }
 }

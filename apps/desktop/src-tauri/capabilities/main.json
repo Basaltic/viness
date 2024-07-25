@@ -26,6 +26,26 @@
         "store:allow-get",
         "store:allow-set",
         "store:allow-save",
-        "store:allow-load"
+        "store:allow-load",
+
+        "fs:default",
+        "fs:allow-mkdir",
+        "fs:allow-lstat",
+        "fs:allow-read-file",
+        "fs:allow-read-text-file",
+        "fs:allow-write-file",
+        "fs:allow-write-text-file",
+        "fs:allow-exists",
+
+        "fs:scope",
+        "fs:scope-app",
+        "fs:scope-app-index",
+        "fs:scope-app-recursive",
+        "fs:scope-desktop",
+        "fs:scope-desktop-index",
+        "fs:scope-desktop-recursive",
+        "fs:scope-document",
+        "fs:scope-document-index",
+        "fs:scope-document-recursive"
     ]
 }

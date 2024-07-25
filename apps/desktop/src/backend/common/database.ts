@@ -5,10 +5,14 @@ export class TauriFileAdapter<T> implements Adapter<T> {
     constructor(private path: string) {}
 
     async read(): Promise<T | null> {
-        const rawData = await readTextFile(this.path);
-        if (rawData) {
-            const data = JSON.parse(rawData);
-            return data;
+        try {
+            const rawData = await readTextFile(this.path);
+            if (rawData) {
+                const data = JSON.parse(rawData);
+                return data;
+            }
+        } catch (e) {
+            console.log(e);
         }
 
         return null;
@@ -16,14 +20,13 @@ export class TauriFileAdapter<T> implements Adapter<T> {
     async write(data: T): Promise<void> {
         // window.requestIdleCallback()
         const rawData = JSON.stringify(data);
-        return writeTextFile(this.path, rawData);
+        return writeTextFile(this.path, rawData, { create: true });
     }
 }
 
-export class JSONDB<Data = unknown> {
-    db: Low<Data>;
+export class JSONDB<Data = unknown> extends Low<Data> {
     constructor(path: string, defaultData: Data) {
         const adapter = new TauriFileAdapter<Data>(path);
-        this.db = new Low<Data>(adapter, defaultData);
+        super(adapter, defaultData);
     }
 }
