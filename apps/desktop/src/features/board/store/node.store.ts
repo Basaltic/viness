@@ -1,12 +1,12 @@
 import { createStore, PersistStorage } from '@viness/store';
 
-type NodeState = {
+export type NodeState = {
     id: string;
     type: string;
     data: any;
 };
 
-const defaultNodeState = {
+export const defaultNodeState = {
     id: '',
     type: '',
     data: void 0,
