@@ -3,7 +3,7 @@ import { NodeType } from './node-type';
 export interface INode<T extends object = object> {
     id: string;
     type: string | NodeType;
-    data: T;
+    data?: T;
     location: INodeLocation;
 }
 
@@ -23,15 +23,15 @@ export interface INodeLocation {
     /**
      * Previous sibling node id
      */
-    prevId: string | null;
+    prevId?: string | null;
     /**
      * Next sibling node id
      */
-    nextId: string | null;
+    nextId?: string | null;
     /**
      * Parent node id
      */
-    parentId: string | null;
+    parentId?: string | null;
     /**
      * The order in the node list
      */
