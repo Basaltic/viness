@@ -1,8 +1,4 @@
-export class AtomicOperationHistory {}
-
 export class AtomicOperations {
-    transact() {}
-
     insert() {}
 
     delete() {}

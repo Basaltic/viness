@@ -2,6 +2,43 @@ import { Patch } from 'immer';
 import { NodeType } from '../node/node-type';
 import { INode } from '../node/node';
 
+export enum OperationType {
+    INSERT = 'insert',
+    DELETE = 'delete',
+    UPDATE = 'update',
+    NAVIGATE = 'navigate',
+    MOVE = 'move',
+}
+
+export interface INodeLocation {
+    /**
+     * x
+     */
+    x?: number;
+    /**
+     * y
+     */
+    y?: number;
+    /**
+     * Previous sibling node id
+     */
+    prevId: string | null;
+    /**
+     * Next sibling node id
+     */
+    nextId: string | null;
+    /**
+     * Parent node idd
+     */
+    parentId: string | null;
+    /**
+     * 顺序
+     */
+    order?: string;
+
+    [key: string]: any;
+}
+
 /**
  * Board Operations
  */
@@ -19,7 +56,7 @@ export interface AtomicOperation<OT = OperationType> {
 /**
  * Create/Insert New Node
  */
-export interface CreateAtomicOperation<C = any> extends AtomicOperation<OperationType.CREATE_NODE> {
+export interface InsertAtomicOperation<C = any> extends AtomicOperation<OperationType.INSERT> {
     /**
      * node id
      */
@@ -32,7 +69,7 @@ export interface CreateAtomicOperation<C = any> extends AtomicOperation<Operatio
     /**
      * 所在位置信息
      */
-    location: IUvaNodeLocation;
+    location: INodeLocation;
     /**
      * 初始化内容
      */
@@ -42,7 +79,7 @@ export interface CreateAtomicOperation<C = any> extends AtomicOperation<Operatio
 /**
  * 删除节点操作
  */
-export interface DeleteAtomicOperation extends AtomicOperation<OperationType.DELETE_NODE> {
+export interface DeleteAtomicOperation extends AtomicOperation<OperationType.DELETE> {
     /**
      * 被删除的节点
      */
@@ -52,7 +89,7 @@ export interface DeleteAtomicOperation extends AtomicOperation<OperationType.DEL
 /**
  * 移动操作
  */
-export interface MoveAtomicOperation extends AtomicOperation<OperationType.MOVE_NODE> {
+export interface MoveAtomicOperation extends AtomicOperation<OperationType.MOVE> {
     /**
      * 被移动的节点
      */
@@ -60,17 +97,17 @@ export interface MoveAtomicOperation extends AtomicOperation<OperationType.MOVE_
     /**
      * 来自什么位置
      */
-    from: IUvaNodeLocation;
+    from: INodeLocation;
     /**
      * 移至什么位置
      */
-    to: IUvaNodeLocation;
+    to: INodeLocation;
 }
 
 /**
  * 画板节点导航操作
  */
-export interface NavigateAtomicOperation extends AtomicOperation<OperationType.NAVIGATE_NODE> {
+export interface NavigateAtomicOperation extends AtomicOperation<OperationType.NAVIGATE> {
     /**
      * 导航到的节点id
      */
@@ -80,7 +117,7 @@ export interface NavigateAtomicOperation extends AtomicOperation<OperationType.N
 /**
  * 内容更新操作
  */
-export interface UpdateAtomicOperation<C = any> extends AtomicOperation<OperationType> {
+export interface UpdateAtomicOperation<C = any> extends AtomicOperation<OperationType.UPDATE> {
     /**
      * 需要更新的节点id
      */
@@ -96,14 +133,6 @@ export interface UpdateAtomicOperation<C = any> extends AtomicOperation<Operatio
     content: Partial<C>;
 }
 
-export enum OperationType {
-    INSERT = 'insert',
-    DELETE = 'delete',
-    UPDATE = 'update',
-    NAVIGATE = 'navigate',
-    MOVE = 'move',
-}
-
 export interface IOperation<O = OperationType, P = {}> {
     id: string;
     type: O;
@@ -113,11 +142,11 @@ export interface IOperation<O = OperationType, P = {}> {
 /**
  * 插入操作，纯粹新增一个节点，并不在意其是否被链入
  */
-export type IMoveOp = IOperation<OperationType.MOVE, { nodeId: string; to: IUvaNodeLocation }>;
-export type IInsertOp = IOperation<OperationType.INSERT, INode>;
-export type IDeleteOp = IOperation<OperationType.DELETE, { nodeId: string }>;
-export type IUpdateOp = IOperation<OperationType.UPDATE, { nodeId: string; changes: Patch[] }>;
-export type INavigateOp = IOperation<OperationType.NAVIGATE, { nodeId: string }>;
+export type IMoveOperation = IOperation<OperationType.MOVE, { nodeId: string; to: INodeLocation }>;
+export type IInsertOperation = IOperation<OperationType.INSERT, INode>;
+export type IDeleteOperation = IOperation<OperationType.DELETE, { nodeId: string }>;
+export type IUpdateOperation = IOperation<OperationType.UPDATE, { nodeId: string; changes: Patch[] }>;
+export type INavigateOperation = IOperation<OperationType.NAVIGATE, { nodeId: string }>;
 
-export type IOpGroup = { redoOp: IOperation; undoOp: IOperation };
-export type IMutation = IOpGroup[];
+export type IOperationGroup = { redoOp: IOperation; undoOp: IOperation };
+export type IMutation = IOperationGroup[];
