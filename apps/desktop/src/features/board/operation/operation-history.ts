@@ -1,7 +1,7 @@
 import { IMutation, IOperationGroup } from './operation.interface';
 
 /**
- * Operation Hisotyr
+ * Operation History
  */
 export class AtomicOperationHistory {
     private undoStack: IMutation[] = [];

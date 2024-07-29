@@ -2,8 +2,10 @@
  * 节点类型
  */
 export enum NodeType {
-    // ---- 普通节点开始
-
+    /**
+     *
+     */
+    ROOT = 'root',
     /**
      * 普通富文本笔记
      */
@@ -38,8 +40,6 @@ export enum NodeType {
      * 公式
      */
     FORMULA = 'formula',
-
-    // ---- 普通节点结束
 }
 
 function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {

@@ -1,15 +1,14 @@
-import { Patch } from 'immer';
+import { Patch } from '@viness/store';
 import { nanoid } from 'nanoid';
 import {
     IDeleteOperation,
     IInsertOperation,
     IMoveOperation,
     INavigateOperation,
-    INodeLocation,
     IUpdateOperation,
     OperationType,
 } from './operation.interface';
-import { INode } from '../node/node';
+import { INode, INodeLocation } from '../node/node';
 
 /**
  * A factory to create atomic operation instance
@@ -23,15 +22,15 @@ export class OperationFactory {
         return { id: nanoid(), type: OperationType.DELETE, payload: { nodeId } };
     }
 
-    static createUpdateContentOp(nodeId: string, changes: Patch[]): IUpdateOperation {
+    static createUpdateOp(nodeId: string, changes: Patch[]): IUpdateOperation {
         return { id: nanoid(), type: OperationType.UPDATE, payload: { nodeId, changes } };
-    }
-
-    static createNavigateOp(nodeId: string): INavigateOperation {
-        return { id: nanoid(), type: OperationType.NAVIGATE, payload: { nodeId } };
     }
 
     static createMoveOp(nodeId: string, to: INodeLocation): IMoveOperation {
         return { id: nanoid(), type: OperationType.MOVE, payload: { nodeId, to } };
+    }
+
+    static createNavigateOp(nodeId: string): INavigateOperation {
+        return { id: nanoid(), type: OperationType.NAVIGATE, payload: { nodeId } };
     }
 }

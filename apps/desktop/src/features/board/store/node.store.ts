@@ -1,39 +1,25 @@
-import { createStore, PersistStorage } from '@viness/store';
+import { createStoreFactory } from '@viness/store';
+import { INode, INodeLocation } from '../node/node';
 
-export type NodeState = {
-    id: string;
-    type: string;
-    data: any;
-};
+export type NodeState = INode & {};
 
-export const defaultNodeState = {
+export const defaultNodeState: NodeState = {
     id: '',
     type: '',
     data: void 0,
+    location: {},
 };
 
-export const nodeStoreFactory = createStore<NodeState>({
+export const nodeStoreFactory = createStoreFactory<NodeState>({
     defaultState: defaultNodeState,
-    persist: createNodeStorePersist,
-});
-
-function createNodeStorePersist(id: string) {
-    const persistentStorage: PersistStorage<NodeState> = {
-        getItem: (name: string) => {
-            return {
-                state: {
-                    id: 'test',
-                    type: '',
-                    data: {},
-                },
-            };
-        },
-        setItem: () => {},
-        removeItem: () => {},
-    };
-
-    return {
-        name: id,
-        storage: persistentStorage,
-    };
-}
+}).withActions(({ set }) => ({
+    changeData: (data: any) =>
+        set((s) => {
+            s.data = data;
+        }),
+    updateLocation: (location: Partial<INodeLocation>) =>
+        set((s) => {
+            const sLocation = s.location;
+            Object.assign(sLocation, location);
+        }),
+}));

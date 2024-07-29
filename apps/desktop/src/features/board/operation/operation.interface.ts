@@ -1,6 +1,6 @@
-import { Patch } from 'immer';
+import { Patch } from '@viness/store';
 import { NodeType } from '../node/node-type';
-import { INode } from '../node/node';
+import { INode, INodeLocation } from '../node/node';
 
 export enum OperationType {
     INSERT = 'insert',
@@ -8,35 +8,6 @@ export enum OperationType {
     UPDATE = 'update',
     NAVIGATE = 'navigate',
     MOVE = 'move',
-}
-
-export interface INodeLocation {
-    /**
-     * x
-     */
-    x?: number;
-    /**
-     * y
-     */
-    y?: number;
-    /**
-     * Previous sibling node id
-     */
-    prevId: string | null;
-    /**
-     * Next sibling node id
-     */
-    nextId: string | null;
-    /**
-     * Parent node idd
-     */
-    parentId: string | null;
-    /**
-     * 顺序
-     */
-    order?: string;
-
-    [key: string]: any;
 }
 
 /**
@@ -130,7 +101,7 @@ export interface UpdateAtomicOperation<C = any> extends AtomicOperation<Operatio
      * 需要修改的字段和值
      * 其属性和不同节点类型的内容属性的一部分
      */
-    content: Partial<C>;
+    data: Partial<C>;
 }
 
 export interface IOperation<O = OperationType, P = {}> {
@@ -148,5 +119,6 @@ export type IDeleteOperation = IOperation<OperationType.DELETE, { nodeId: string
 export type IUpdateOperation = IOperation<OperationType.UPDATE, { nodeId: string; changes: Patch[] }>;
 export type INavigateOperation = IOperation<OperationType.NAVIGATE, { nodeId: string }>;
 
-export type IOperationGroup = { redoOp: IOperation; undoOp: IOperation };
+// [redo, undo]
+export type IOperationGroup = [IOperation, IOperation];
 export type IMutation = IOperationGroup[];

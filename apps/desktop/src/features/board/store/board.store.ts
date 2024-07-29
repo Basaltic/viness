@@ -3,9 +3,3 @@
  * - atom operations
  * -
  */
-export class BoardStore {
-    //
-    private nodes;
-
-    constructor() {}
-}
