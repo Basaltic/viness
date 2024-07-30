@@ -1,15 +1,19 @@
 import { createStoreFactory } from '@viness/store';
 import { INode, INodeLocation } from '../node/node';
 
-export type NodeState = INode & {};
+export type NodeState = INode & {
+    selected: boolean;
+};
 
 export const defaultNodeState: NodeState = {
     id: '',
     type: '',
     data: void 0,
     location: {},
-};
 
+    selected: false,
+};
+// every node instance has a individual state store instance
 export const nodeStoreFactory = createStoreFactory<NodeState>({
     defaultState: defaultNodeState,
 }).withActions(({ set }) => ({
@@ -23,3 +27,5 @@ export const nodeStoreFactory = createStoreFactory<NodeState>({
             Object.assign(sLocation, location);
         }),
 }));
+
+// other state store

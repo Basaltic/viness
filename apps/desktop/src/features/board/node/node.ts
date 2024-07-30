@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { NodeType } from './node-type';
 
 export interface INode<T extends object = object> {
@@ -7,8 +8,13 @@ export interface INode<T extends object = object> {
     location: INodeLocation;
 }
 
-export interface INodeDescription {
+export interface INodeDescription<T extends object = object> {
     type: string | NodeType;
+    defaultData?: T;
+    /**
+     * default board view
+     */
+    view: FC;
 }
 
 export interface INodeLocation {

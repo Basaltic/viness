@@ -1,4 +1,4 @@
-import { IMutation, IOperationGroup } from './operation.interface';
+import { AtomicOperation, IMutation, IOperation, IOperationGroup } from './operation.interface';
 
 /**
  * Operation History
@@ -12,11 +12,11 @@ export class AtomicOperationHistory {
     public mutationQueue: IMutation[] = [];
 
     /**
-     * 记录
+     * record operation history
      */
-    public push(ops: IOperationGroup) {
+    public push(op: IOperation, inverseOp: IOperation) {
         if (this.isChanging) {
-            this.mutation.push(ops);
+            this.mutation.push([op, inverseOp]);
         }
     }
 

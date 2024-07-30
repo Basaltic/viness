@@ -1,11 +1,30 @@
 import { nodeStoreFactory } from '../store/node.store';
 import { produceWithPatches } from '@viness/store';
 import { OperationFactory } from './op.factory';
-import { atomicOperationHistory } from './operation-history';
-import { INodeLocation } from '../node/node';
+import { AtomicOperationHistory } from './operation-history';
+import { INode, INodeLocation } from '../node/node';
 
 export class AtomicOperations {
-    insert() {}
+    constructor(private history: AtomicOperationHistory) {}
+
+    /**
+     * insert a new node to the board
+     */
+    insert(node: INode) {
+        if (node.location.prevId) {
+        } else if (node.location.nextId) {
+        }
+        // put to the last
+        else if (node.location.parentId) {
+        } else {
+            return;
+        }
+
+        const op = OperationFactory.createInsertOp(node);
+        const inverseOp = OperationFactory.createDeleteOp(node.id);
+
+        this.history.push(op, inverseOp);
+    }
 
     /**
      * permenant delete node
@@ -35,7 +54,7 @@ export class AtomicOperations {
         const op = OperationFactory.createDeleteOp(nodeId);
         const inverseOp = OperationFactory.createInsertOp(nodeStore.state.get());
 
-        atomicOperationHistory.push([op, inverseOp]);
+        this.history.push(op, inverseOp);
     }
 
     move(movingNodeId: string, to: INodeLocation) {
@@ -46,6 +65,8 @@ export class AtomicOperations {
 
         const op = OperationFactory.createMoveOp(movingNodeId, to);
         const inverseOp = OperationFactory.createMoveOp(movingNodeId, inverseTo);
+
+        this.history.push(op, inverseOp);
     }
 
     /**
@@ -67,8 +88,11 @@ export class AtomicOperations {
         const op = OperationFactory.createUpdateOp(nodeId, patches);
         const inverseOp = OperationFactory.createUpdateOp(nodeId, inversePatches);
 
-        atomicOperationHistory.push([op, inverseOp]);
+        this.history.push(op, inverseOp);
     }
 
+    /**
+     * navigate between nodes
+     */
     navigate() {}
 }
