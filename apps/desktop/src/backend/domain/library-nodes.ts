@@ -1,16 +1,16 @@
 import { exists } from '@tauri-apps/plugin-fs';
 import { JSONDB } from '../common/database';
-import { Patch } from '@viness/store';
+import { applyPatches, Patch } from '@viness/store';
 import { generateId } from '@/common/util/id';
 
 export interface INode<T extends object = object> {
     id: string;
     type: string;
-    data: T;
+    data?: T;
     location: {
         x?: number;
         y?: number;
-        order: string;
+        order?: string;
     };
 }
 
@@ -94,9 +94,19 @@ export class LibraryNodes {
         const existed = exists(path);
         if (!existed) {
             // create a root node
-            const rootNode = { id: generateId(), type: 'root' };
+            const rootNodeId = generateId();
+            const rootNode: INode = { id: rootNodeId, type: 'root', location: {} };
+            const defaultData = {
+                root: rootNodeId,
+                tree: {
+                    [rootNodeId]: {},
+                },
+                nodes: {
+                    [rootNode.id]: rootNode,
+                },
+            };
 
-            const db = new JSONDB<ILibraryNodes>(path, DEFAULT_NODES_DATA);
+            const db = new JSONDB<ILibraryNodes>(path, defaultData);
             db.write();
         }
 
@@ -109,5 +119,15 @@ export class LibraryNodes {
 
     move(params: { nodeId: string; to: INodeLocation }) {}
 
-    update(params: { nodeId: string; changes: Patch[] }) {}
+    update(params: { nodeId: string; changes: Patch[] }) {
+        this.db.update((data) => {
+            const { nodeId, changes } = params;
+            const nodeToUpdate = data.nodes[nodeId];
+            const dataToUpdate = nodeToUpdate.data || {};
+
+            const nextData = applyPatches(dataToUpdate, changes);
+
+            nodeToUpdate.data = nextData;
+        });
+    }
 }

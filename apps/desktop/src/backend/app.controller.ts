@@ -78,5 +78,5 @@ export class AppController {
         return Response.succeed({ id: library?.info.data.id });
     }
 
-    async sync() {}
+    async sync(operations: []) {}
 }
