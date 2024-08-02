@@ -1,6 +1,6 @@
 import { LibraryInfo } from './library-setting';
-import { LibraryNodes } from './library-nodes';
 import { LibraryAssets } from './library-assets';
+import { LibraryStates } from './library-states';
 
 /**
  *
@@ -22,23 +22,23 @@ export class CreativeLibrary {
     public basePath = '';
 
     public info: LibraryInfo;
-    public nodes: LibraryNodes;
+    public states: LibraryStates;
     public assets: LibraryAssets;
 
-    constructor(params: { basePath: string; nodes: LibraryNodes; assets: LibraryAssets; info: LibraryInfo }) {
-        const { basePath, nodes, assets, info } = params;
+    constructor(params: { basePath: string; states: LibraryStates; assets: LibraryAssets; info: LibraryInfo }) {
+        const { basePath, states, assets, info } = params;
         this.info = info;
-        this.nodes = nodes;
+        this.states = states;
         this.assets = assets;
         this.basePath = basePath;
     }
 
     static async initialize(basePath: string) {
         const info = await LibraryInfo.initialize(basePath);
-        const nodes = await LibraryNodes.initialize(basePath);
+        const states = await LibraryStates.initialize(basePath);
         const assets = await LibraryAssets.initialize(basePath);
 
-        return new CreativeLibrary({ basePath, nodes, assets, info });
+        return new CreativeLibrary({ basePath, states, assets, info });
     }
 
     /**

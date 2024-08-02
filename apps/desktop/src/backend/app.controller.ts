@@ -4,13 +4,17 @@ import { CreativeLibrary } from './domain/library';
 import { LibraryManager } from './domain/library-manager';
 import { OpenHistory } from './domain/open-history';
 import { Response } from './dto/response';
+import { INodeState } from './domain/library-nodes';
 
 /**
  *
  */
 export class AppController {
-    private libraryManager = new LibraryManager();
     public openHistory = new OpenHistory();
+
+    private libraryManager = new LibraryManager();
+
+    private currentLibrary?: CreativeLibrary;
 
     /**
      * create a new creative library in a specific path
@@ -36,6 +40,8 @@ export class AppController {
 
         this.openHistory.set(path);
 
+        this.currentLibrary = library;
+
         return Response.succeed({ id: library.info.data.id });
     }
 
@@ -60,6 +66,8 @@ export class AppController {
 
         this.openHistory.set(path);
 
+        this.currentLibrary = library;
+
         return Response.succeed({ id: library.info.data.id });
     }
 
@@ -75,8 +83,30 @@ export class AppController {
             this.openHistory.set(library?.basePath);
         }
 
+        this.currentLibrary = library;
+
         return Response.succeed({ id: library?.info.data.id });
     }
 
-    async sync(operations: []) {}
+    async persistBoardState() {}
+
+    async persistNodeState(id: string, node: INodeState) {
+        try {
+            await this.currentLibrary?.nodes.set(id, node);
+            return Response.succeed();
+        } catch (e) {}
+
+        return Response.fail();
+    }
+
+    async getNodeState(id: string) {
+        try {
+            await this.currentLibrary?.nodes.get(id);
+            return Response.succeed<INodeState>();
+        } catch (e) {}
+
+        return Response.fail<INodeState>();
+    }
+
+    async removeNodeState(id: string) {}
 }

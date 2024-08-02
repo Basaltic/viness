@@ -23,3 +23,6 @@ tauri-plugin-shell = "2.0.0-beta"
 tauri-plugin-store = "2.0.0-beta"
 tauri-plugin-dialog = "2.0.0-beta"
 
+[dependencies.tauri-plugin-sql]
+features = ["sqlite"] # or "postgres", or "mysql"
+version = "2.0.0-beta"

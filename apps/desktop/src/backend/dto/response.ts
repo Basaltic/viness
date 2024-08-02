@@ -6,7 +6,7 @@ export interface IResponse<T> {
 }
 
 export class Response {
-    static fail<T>(msg: string, code: number = 0): IResponse<T> {
+    static fail<T>(msg?: string, code: number = 400): IResponse<T> {
         return {
             success: false,
             errorCode: code,
@@ -15,7 +15,7 @@ export class Response {
         };
     }
 
-    static succeed<T>(data: T): IResponse<T> {
+    static succeed<T>(data: T | null = null): IResponse<T> {
         return {
             data,
             success: false,
