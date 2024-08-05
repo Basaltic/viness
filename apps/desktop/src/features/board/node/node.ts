@@ -15,6 +15,7 @@ export interface INodeDescription<T extends object = object> {
      * default board view
      */
     view: FC;
+    draggingView: FC;
 }
 
 export interface INodeLocation {
@@ -38,6 +39,10 @@ export interface INodeLocation {
      * Parent node id
      */
     parentId?: string | null;
+    /**
+     * Child head node id
+     */
+    childHeadId?: string | null;
     /**
      * The order in the node list
      */

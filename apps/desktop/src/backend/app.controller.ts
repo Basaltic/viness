@@ -4,7 +4,7 @@ import { CreativeLibrary } from './domain/library';
 import { LibraryManager } from './domain/library-manager';
 import { OpenHistory } from './domain/open-history';
 import { Response } from './dto/response';
-import { INodeState } from './domain/library-nodes';
+import { IPersistedState } from './domain/library-states';
 
 /**
  *
@@ -88,25 +88,29 @@ export class AppController {
         return Response.succeed({ id: library?.info.data.id });
     }
 
-    async persistBoardState() {}
-
-    async persistNodeState(id: string, node: INodeState) {
+    async getState(id: string) {
         try {
-            await this.currentLibrary?.nodes.set(id, node);
+            await this.currentLibrary?.states.get(id);
+            return Response.succeed<IPersistedState>();
+        } catch (e) {}
+
+        return Response.fail<IPersistedState>();
+    }
+
+    async persistState(id: string, state: IPersistedState) {
+        try {
+            await this.currentLibrary?.states.set(id, state);
             return Response.succeed();
         } catch (e) {}
 
         return Response.fail();
     }
 
-    async getNodeState(id: string) {
+    async removeState(id: string) {
         try {
-            await this.currentLibrary?.nodes.get(id);
-            return Response.succeed<INodeState>();
+            await this.currentLibrary?.states.remove(id);
+            return Response.succeed<IPersistedState>();
         } catch (e) {}
-
-        return Response.fail<INodeState>();
+        return Response.fail<IPersistedState>();
     }
-
-    async removeNodeState(id: string) {}
 }

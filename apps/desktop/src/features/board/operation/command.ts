@@ -14,4 +14,10 @@ export class Commands {
     redo() {
         return this.history.redo(() => {});
     }
+
+    insertNode() {}
+
+    removeNode() {}
+
+    movePosition() {}
 }

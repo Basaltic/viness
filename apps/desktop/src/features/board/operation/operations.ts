@@ -32,27 +32,28 @@ export class AtomicOperations {
      * @param nodeId
      */
     delete(nodeId: string) {
-        const nodeStore = nodeStoreFactory(nodeId);
-        const deletedNodeState = nodeStore.state.get();
+        const deletedNodeStore = nodeStoreFactory(nodeId);
+        const deletedNodeState = deletedNodeStore.state.get();
         // clear all the relationship of this node
         if (deletedNodeState.location) {
-            const { prevId, nextId } = deletedNodeState.location;
+            const { prevId, nextId, parentId } = deletedNodeState.location;
 
             if (prevId) {
                 const prevNodeStore = nodeStoreFactory(prevId);
                 prevNodeStore.actions.updateLocation({ nextId: nextId });
-            }
-            if (nextId) {
+            } else if (nextId) {
                 const nextNodeStore = nodeStoreFactory(nextId);
                 nextNodeStore.actions.updateLocation({ prevId: prevId });
+
+                if (parentId) {
+                    const parentNodeStore = nodeStoreFactory(parentId);
+                    parentNodeStore.actions.updateLocation({ childHeadId: nextId });
+                }
             }
         }
 
-        // destory the instance
-        nodeStore.destory();
-
         const op = OperationFactory.createDeleteOp(nodeId);
-        const inverseOp = OperationFactory.createInsertOp(nodeStore.state.get());
+        const inverseOp = OperationFactory.createInsertOp(deletedNodeStore.state.get());
 
         this.history.push(op, inverseOp);
     }
@@ -60,6 +61,8 @@ export class AtomicOperations {
     move(movingNodeId: string, to: INodeLocation) {
         const movingNodeStore = nodeStoreFactory(movingNodeId);
         const movingNodeState = movingNodeStore.state.get();
+
+        // TODO
 
         const inverseTo = { ...movingNodeState.location };
 

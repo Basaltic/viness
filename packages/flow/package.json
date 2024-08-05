@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "swr": "^2.1.5",
+        "ahooks": "^3.8.0",
         "radash": "^12.1.0"
     },
     "devDependencies": {

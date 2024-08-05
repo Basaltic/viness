@@ -4,21 +4,21 @@
     "description": "Capability for the main window",
     "windows": ["main"],
     "permissions": [
-        "path:default",
+        "core:path:default",
 
-        "event:default",
+        "core:event:default",
 
-        "window:default",
+        "core:window:default",
 
-        "app:default",
+        "core:app:default",
 
-        "resources:default",
+        "core:resources:default",
 
-        "menu:default",
+        "core:menu:default",
 
-        "tray:default",
+        "core:tray:default",
 
-        "window:allow-set-title",
+        "core:window:allow-set-title",
 
         "dialog:default",
         "dialog:allow-open",
