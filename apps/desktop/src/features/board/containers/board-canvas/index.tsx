@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import bgSvg from './assets/bg-point.svg';
 import useBoardCanvasScroll from './use-board-canvas-scroll';
+import { useCurrentNodeStore } from '../../store/board.store';
 
 /**
  * 画板
@@ -10,6 +11,7 @@ export default function BoardCanvas() {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     const scrollInfo = useBoardCanvasScroll(scrollContainerRef, scrollContentRef);
+    const currentNodeStore = useCurrentNodeStore();
 
     return (
         <>

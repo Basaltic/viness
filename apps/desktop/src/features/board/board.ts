@@ -7,11 +7,11 @@ export class Board {
     private history: AtomicOperationHistory;
     private operations: AtomicOperations;
 
-    registry: NodeDescriptionRegistry;
+    descriptionRegistry: NodeDescriptionRegistry;
     commands: Commands;
 
     constructor() {
-        this.registry = new NodeDescriptionRegistry();
+        this.descriptionRegistry = new NodeDescriptionRegistry();
         this.history = new AtomicOperationHistory();
         this.operations = new AtomicOperations(this.history);
 

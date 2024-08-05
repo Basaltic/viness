@@ -8,13 +8,17 @@ export interface INode<T extends object = object> {
     location: INodeLocation;
 }
 
+export interface INodeViewProps {
+    id: string;
+}
+
 export interface INodeDescription<T extends object = object> {
     type: string | NodeType;
     defaultData?: T;
     /**
      * default board view
      */
-    view: FC;
+    view: FC<INodeViewProps>;
     draggingView: FC;
 }
 

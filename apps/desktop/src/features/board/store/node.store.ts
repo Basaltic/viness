@@ -33,3 +33,5 @@ export const nodeStoreFactory = createStoreFactory<NodeState>({
             Object.assign(sLocation, location);
         }),
 }));
+
+export const useNodeStoreFactory = nodeStoreFactory;

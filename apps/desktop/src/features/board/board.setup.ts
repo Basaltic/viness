@@ -3,5 +3,7 @@ import { VideoNodeDescription } from './nodes/video';
 
 export const board = new Board();
 
+export const useBoard = () => board;
+
 // register nodes
-board.registry.register(VideoNodeDescription);
+board.descriptionRegistry.register(VideoNodeDescription);
