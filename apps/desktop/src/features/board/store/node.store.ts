@@ -14,6 +14,7 @@ export const defaultNodeState: NodeState = {
 
     selected: false,
 };
+
 // every node instance has a individual state store instance
 export const nodeStoreFactory = createStoreFactory<NodeState>({
     defaultState: defaultNodeState,
@@ -23,6 +24,10 @@ export const nodeStoreFactory = createStoreFactory<NodeState>({
         };
     },
 }).withActions(({ set }) => ({
+    changeId: (id: string) =>
+        set((s) => {
+            s.id = id;
+        }),
     changeData: (data: any) =>
         set((s) => {
             s.data = data;

@@ -1,3 +1,4 @@
+import { generateId } from '@/common/util/id';
 import { AtomicOperationHistory } from './operation-history';
 import { AtomicOperations } from './operations';
 
@@ -15,7 +16,11 @@ export class Commands {
         return this.history.redo(() => {});
     }
 
-    insertNode() {}
+    insertNode(type: string, data: any) {
+        this.history.transact(() => {
+            this.operations.insert({ id: generateId(), type, data, location: { x: 0, y: 0 } });
+        });
+    }
 
     removeNode() {}
 

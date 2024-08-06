@@ -1,27 +1,6 @@
 import { FC } from 'react';
 import { NodeType } from './node-type';
 
-export interface INode<T extends object = object> {
-    id: string;
-    type: string | NodeType;
-    data?: T;
-    location: INodeLocation;
-}
-
-export interface INodeViewProps {
-    id: string;
-}
-
-export interface INodeDescription<T extends object = object> {
-    type: string | NodeType;
-    defaultData?: T;
-    /**
-     * default board view
-     */
-    view: FC<INodeViewProps>;
-    draggingView: FC;
-}
-
 export interface INodeLocation {
     /**
      * x
@@ -42,15 +21,32 @@ export interface INodeLocation {
     /**
      * Parent node id
      */
-    parentId?: string | null;
+    upperId?: string | null;
     /**
      * Child head node id
      */
-    childHeadId?: string | null;
-    /**
-     * The order in the node list
-     */
-    order?: string;
+    lowerHeadId?: string | null;
 
     [key: string]: any;
+}
+
+export interface INode<T extends object = object> {
+    id: string;
+    type: string | NodeType;
+    data?: T;
+    location: INodeLocation;
+}
+
+export interface INodeViewProps {
+    id: string;
+}
+
+export interface INodeDescription<T extends object = object> {
+    type: string | NodeType;
+    defaultData?: T;
+    /**
+     * default board view
+     */
+    view: FC<INodeViewProps>;
+    draggingView: FC;
 }

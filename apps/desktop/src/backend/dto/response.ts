@@ -1,4 +1,4 @@
-export interface IResponse<T> {
+export interface IResponse<T = any> {
     data?: T | null;
     success: boolean;
     errorCode?: number;

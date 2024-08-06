@@ -1,10 +1,6 @@
 import { exists } from '@tauri-apps/plugin-fs';
 import { JSONDB } from '../common/database';
-
-export interface IPersistedState<T extends object = object> {
-    state: T;
-    version: number;
-}
+import { IPersistedState } from '../../common/types';
 
 export interface ILibraryStates {
     states: Record<string, IPersistedState>;

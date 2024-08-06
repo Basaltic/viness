@@ -1,7 +1,7 @@
 import { INodeDescription } from '../../node/node';
 import { NodeType } from '../../node/node-type';
 
-export const VideoNodeDescription: INodeDescription = {
+export const ImageNodeDescription: INodeDescription = {
     type: NodeType.IMAGE,
     view: () => null,
     draggingView: () => null,

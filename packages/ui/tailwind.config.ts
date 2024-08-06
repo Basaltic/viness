@@ -2,15 +2,7 @@ import type { Config } from 'tailwindcss';
 
 const config = {
     darkMode: ['class'],
-    content: [
-        './pages/**/*.{ts,tsx}',
-        './components/**/*.{ts,tsx}',
-        './app/**/*.{ts,tsx}',
-        './src/**/*.{ts,tsx}',
-        './**/*.{ts,tsx}',
-        'node_modules/daisyui/dist/**/*.js',
-        'node_modules/react-daisyui/dist/**/*.js',
-    ],
+    content: ['./pages/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}', './**/*.{ts,tsx}'],
     prefix: '',
     theme: {
         container: {

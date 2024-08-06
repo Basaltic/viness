@@ -2,16 +2,20 @@ import { useRef } from 'react';
 import bgSvg from './assets/bg-point.svg';
 import useBoardCanvasScroll from './use-board-canvas-scroll';
 import { useCurrentNodeStore } from '../../store/board.store';
+import { NodeItemInBoard } from './node-item-in-board';
 
 /**
  * 画板
  */
-export default function BoardCanvas() {
+export function BoardCanvas() {
     const scrollContentRef = useRef<HTMLDivElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     const scrollInfo = useBoardCanvasScroll(scrollContainerRef, scrollContentRef);
     const currentNodeStore = useCurrentNodeStore();
+
+    const { location } = currentNodeStore.state.use();
+    const { lowerHeadId } = location;
 
     return (
         <>
@@ -23,14 +27,13 @@ export default function BoardCanvas() {
             >
                 <div
                     data-overlayscrollbars-initialize
-                    ref={scrollContentRef}
                     className="relative min-w-full min-h-full"
                     style={{
                         width: scrollInfo.scrollWidth,
                         height: scrollInfo.scrollHeight,
                     }}
                 >
-                    {/* {displayBoardNode.location.headId && <ElementItemInBoard isResizable nodeId={displayBoardNode.location.headId} />} */}
+                    {lowerHeadId && <NodeItemInBoard nodeId={lowerHeadId} />}
                 </div>
             </div>
         </>

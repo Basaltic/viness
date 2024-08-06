@@ -6,7 +6,7 @@ const SMALLEST_INTEGER = 'A00000000000000000000000000';
 // no trailing zeros allowed.
 // digits is a string such as '0123456789' for base 10.  Digits must be in
 // ascending character code order!
-function midpoint(a, b, digits) {
+function midpoint(a: string | null, b: string | null, digits: string): string {
     if (b !== null && a >= b) {
         throw new Error(a + ' >= ' + b);
     }
@@ -47,7 +47,7 @@ function midpoint(a, b, digits) {
     }
 }
 
-function getIntegerLength(head) {
+function getIntegerLength(head: string) {
     if (head >= 'a' && head <= 'z') {
         return head.charCodeAt(0) - 'a'.charCodeAt(0) + 2;
     } else if (head >= 'A' && head <= 'Z') {
@@ -57,14 +57,14 @@ function getIntegerLength(head) {
     }
 }
 
-function validateInteger(int) {
+function validateInteger(int: string) {
     if (int.length !== getIntegerLength(int.charAt(0))) {
         throw new Error('invalid integer part of order key: ' + int);
     }
 }
 
 // note that this may return null, as there is a largest integer
-function incrementInteger(x, digits) {
+function incrementInteger(x: string, digits: string) {
     validateInteger(x);
     const [head, ...digs] = x.split('');
     let carry = true;
@@ -97,7 +97,7 @@ function incrementInteger(x, digits) {
 }
 
 // note that this may return null, as there is a smallest integer
-function decrementInteger(x, digits) {
+function decrementInteger(x: string, digits: string): string | null {
     validateInteger(x);
     const [head, ...digs] = x.split('');
     let borrow = true;
@@ -129,7 +129,7 @@ function decrementInteger(x, digits) {
     }
 }
 
-function getIntegerPart(key) {
+function getIntegerPart(key: string) {
     const integerPartLength = getIntegerLength(key.charAt(0));
     if (integerPartLength > key.length) {
         throw new Error('invalid order key: ' + key);
@@ -137,7 +137,7 @@ function getIntegerPart(key) {
     return key.slice(0, integerPartLength);
 }
 
-function validateOrderKey(key) {
+function validateOrderKey(key: string) {
     if (key === SMALLEST_INTEGER) {
         throw new Error('invalid order key: ' + key);
     }
@@ -156,7 +156,7 @@ function validateOrderKey(key) {
 // `a < b` lexicographically if both are non-null.
 // digits is a string such as '0123456789' for base 10.  Digits must be in
 // ascending character code order!
-export function generateKeyBetween(a, b, digits) {
+export function generateKeyBetween(a: string, b: string, digits: string): string | null {
     if (a !== null) {
         validateOrderKey(a);
     }
@@ -201,7 +201,7 @@ export function generateKeyBetween(a, b, digits) {
 // If one or the other is null, returns consecutive "integer"
 // keys.  Otherwise, returns relatively short keys between
 // a and b.
-export function generateNKeysBetween(a, b, n, digits) {
+export function generateNKeysBetween(a: string, b: string, n: number, digits: string): string[] {
     if (n === 0) {
         return [];
     }

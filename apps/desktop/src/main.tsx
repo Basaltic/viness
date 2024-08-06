@@ -10,6 +10,5 @@ const container = document.getElementById('root') as HTMLDivElement;
 createRoot(container).render(
     <StrictMode>
         <App />
-        <div>test</div>
     </StrictMode>,
 );

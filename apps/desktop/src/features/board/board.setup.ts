@@ -1,9 +1,9 @@
 import { Board } from './board';
-import { VideoNodeDescription } from './nodes/video';
+import { ImageNodeDescription } from './nodes/image';
 
 export const board = new Board();
 
 export const useBoard = () => board;
 
 // register nodes
-board.descriptionRegistry.register(VideoNodeDescription);
+board.descriptionRegistry.register(ImageNodeDescription);

@@ -6,10 +6,9 @@ export enum NodeType {
      *
      */
     ROOT = 'root',
-    /**
-     * 普通富文本笔记
-     */
-    NOTE = 'note',
+
+    /**  */
+    HEADING = 'heading',
 
     /**
      * 任务列表
@@ -40,6 +39,9 @@ export enum NodeType {
      * 公式
      */
     FORMULA = 'formula',
+
+    /** 普通富文本笔记 */
+    // NOTE = 'note',
 }
 
 function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {

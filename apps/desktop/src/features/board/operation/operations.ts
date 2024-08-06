@@ -15,7 +15,7 @@ export class AtomicOperations {
         } else if (node.location.nextId) {
         }
         // put to the last
-        else if (node.location.parentId) {
+        else if (node.location.upperId) {
         } else {
             return;
         }
@@ -36,7 +36,7 @@ export class AtomicOperations {
         const deletedNodeState = deletedNodeStore.state.get();
         // clear all the relationship of this node
         if (deletedNodeState.location) {
-            const { prevId, nextId, parentId } = deletedNodeState.location;
+            const { prevId, nextId, upperId: parentId } = deletedNodeState.location;
 
             if (prevId) {
                 const prevNodeStore = nodeStoreFactory(prevId);
@@ -47,7 +47,7 @@ export class AtomicOperations {
 
                 if (parentId) {
                     const parentNodeStore = nodeStoreFactory(parentId);
-                    parentNodeStore.actions.updateLocation({ childHeadId: nextId });
+                    parentNodeStore.actions.updateLocation({ lowerHeadId: nextId });
                 }
             }
         }

@@ -14,7 +14,7 @@ export function FirstUseSetupPage() {
     };
 
     const handleOpen = async () => {
-        await controllers.app.open();
+        // await controllers.app.open();
     };
 
     return (

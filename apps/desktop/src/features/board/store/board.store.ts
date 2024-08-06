@@ -7,28 +7,31 @@
 import { createStore } from '@viness/store';
 import { createStatePersisiStorage } from './persist/storage';
 import { nodeStoreFactory } from './node.store';
+import { generateId } from '@/common/util/id';
 
 export interface IBoardState {
-    root: string | null;
-    current: string | null;
+    uppest?: string;
+    current?: string;
 }
 
+// TODO: set fixed id for test
 const defaultBoardState: IBoardState = {
-    root: null,
-    current: null,
+    uppest: undefined,
+    current: undefined,
 };
 
 export const boardStore = createStore<IBoardState>({
     defaultState: defaultBoardState,
     persist: () => ({
+        name: '',
         storage: () => createStatePersisiStorage('board'),
     }),
 }).withActions(({ set }) => ({
-    changeRoot: (root: string) =>
+    changeUppest: (uppest?: string) =>
         set((s) => {
-            s.root = root;
+            s.uppest = uppest;
         }),
-    changeCurrent: (current: string) =>
+    changeCurrent: (current?: string) =>
         set((s) => {
             s.current = current;
         }),
@@ -37,15 +40,46 @@ export const boardStore = createStore<IBoardState>({
 export const getCurrentNodeStore = () => {
     const { current } = boardStore.state.get();
 
-    return current ? nodeStoreFactory(current) : null;
+    return current ? nodeStoreFactory(current) : getUppestNodeStore();
 };
 
-export const useCurrentNodeStore = getCurrentNodeStore;
+export const useCurrentNodeStore = () => {
+    const { current } = boardStore.state.use();
 
-export const getRootNodeStore = () => {
-    const { root } = boardStore.state.get();
+    let currentNodeId = current;
+    if (!currentNodeId) {
+        const { uppest } = boardStore.state.get();
+        currentNodeId = uppest;
+        boardStore.actions.changeCurrent(uppest);
+    }
 
-    return root ? nodeStoreFactory(root) : null;
+    return nodeStoreFactory(currentNodeId);
 };
 
-export const useRootNodeStore = getRootNodeStore;
+export const getUppestNodeStore = () => {
+    const { uppest } = boardStore.state.get();
+
+    let uppestNodeId = uppest;
+    if (!uppestNodeId) {
+        uppestNodeId = generateId();
+        boardStore.actions.changeUppest(uppestNodeId);
+    }
+
+    const store = nodeStoreFactory(uppestNodeId);
+
+    store.actions.changeId(uppestNodeId);
+
+    return store;
+};
+
+export const useUppestNodeStore = () => {
+    const { uppest } = boardStore.state.use();
+
+    let uppestNodeId = uppest;
+    if (!uppestNodeId) {
+        uppestNodeId = generateId();
+        boardStore.actions.changeUppest(uppestNodeId);
+    }
+
+    return nodeStoreFactory(uppestNodeId);
+};

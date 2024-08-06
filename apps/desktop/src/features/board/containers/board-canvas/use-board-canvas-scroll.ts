@@ -1,6 +1,6 @@
 import { useMount } from 'ahooks';
-import { useEffect, useState } from 'react';
-import { OverlayScrollbars, ScrollbarsHidingPlugin, SizeObserverPlugin, ClickScrollPlugin } from 'overlayscrollbars';
+import { useEffect, useRef, useState } from 'react';
+import { OverlayScrollbars } from 'overlayscrollbars';
 
 const THREADHOLD = 300;
 const INCREASE_STEP = 500;
@@ -28,6 +28,8 @@ export default function useBoardCanvasScroll(
     const [scrollWidth, setScrollWidth] = useState('100%');
     const [scrollHeight, setScrollHeight] = useState('100%');
 
+    const scrollbarRef = useRef<OverlayScrollbars>();
+
     /**
      * 虚拟滚轴
      */
@@ -41,13 +43,9 @@ export default function useBoardCanvasScroll(
                     overflow: { x: 'scroll', y: 'scroll' },
                     scrollbars: { clickScroll: true },
                 },
-                {
-                    updated(instance, onUpdatedArgs) {},
-                    scroll(instance, event) {
-                        instance.state();
-                    },
-                },
             );
+
+            scrollbarRef.current = scrollbar;
         }
     });
 
@@ -55,29 +53,31 @@ export default function useBoardCanvasScroll(
      * 滑动区域的长宽调整
      */
     useEffect(() => {
-        if (scrollContentRef.current) {
-            const rect = scrollContentRef.current.getBoundingClientRect();
-            const w = rect.width;
-            const h = rect.height;
-            const x = rect.x;
-            const y = rect.y;
+        if (scrollbarRef.current) {
+            const { overflowAmount } = scrollbarRef.current.state();
 
-            let width = scrollWidth;
-            if (x + w - maxX < THREADHOLD) {
-                width = `${w + INCREASE_STEP}px`;
-            }
+            // const rect = scrollContentRef.current.getBoundingClientRect();
+            // const w = rect.width;
+            // const h = rect.height;
+            // const x = rect.x;
+            // const y = rect.y;
 
-            let height = scrollHeight;
-            if (y + h - maxY < THREADHOLD) {
-                height = `${h + INCREASE_STEP}px`;
-            }
+            // let width = scrollWidth;
+            // if (x + w - maxX < THREADHOLD) {
+            //     width = `${w + INCREASE_STEP}px`;
+            // }
 
-            if (width !== scrollWidth) {
-                setScrollWidth(width);
-            }
-            if (height !== scrollHeight) {
-                setScrollHeight(height);
-            }
+            // let height = scrollHeight;
+            // if (y + h - maxY < THREADHOLD) {
+            //     height = `${h + INCREASE_STEP}px`;
+            // }
+
+            // if (width !== scrollWidth) {
+            //     setScrollWidth(width);
+            // }
+            // if (height !== scrollHeight) {
+            //     setScrollHeight(height);
+            // }
         }
     }, [scrollContentRef, maxX, maxY, scrollWidth, scrollHeight]);
 

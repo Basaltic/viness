@@ -3,14 +3,15 @@ import { open } from '@tauri-apps/plugin-dialog';
 import { CreativeLibrary } from './domain/library';
 import { LibraryManager } from './domain/library-manager';
 import { OpenHistory } from './domain/open-history';
-import { Response } from './dto/response';
-import { IPersistedState } from './domain/library-states';
+import { Response } from '../dto/response';
+import { IAppController } from '../app.interface';
+import { IPersistedState } from '../common/types';
 
 /**
  *
  */
-export class AppController {
-    public openHistory = new OpenHistory();
+export class TauriAppController implements IAppController {
+    private openHistory = new OpenHistory();
 
     private libraryManager = new LibraryManager();
 
@@ -24,7 +25,7 @@ export class AppController {
     async create(params: { name: string }) {
         const basePath = await open({ directory: true, multiple: false, canCreateDirectories: true, title: 'select a folder' });
 
-        if (!basePath) return;
+        if (!basePath) return Response.fail<any>();
 
         const { name } = params;
         const path = `${basePath}/${name}`;
@@ -53,7 +54,7 @@ export class AppController {
             // select library folder
             path = await open({ directory: true, multiple: false, canCreateDirectories: true, title: 'select a library folder' });
 
-            if (!path) return;
+            if (!path) return Response.fail<any>();
         }
 
         let library = this.libraryManager.get(path);
@@ -85,7 +86,7 @@ export class AppController {
 
         this.currentLibrary = library;
 
-        return Response.succeed({ id: library?.info.data.id });
+        return Response.succeed({ id: library?.info.data.id || '' });
     }
 
     async getState(id: string) {
